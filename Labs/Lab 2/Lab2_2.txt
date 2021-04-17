@@ -1,0 +1,52 @@
+[rshaon1@gsuad.gsu.edu@snowball Lab2_P2]$ cat Lab2_2.txt
+  141  cp -i home/rshaon1/Lab_P2/RealEstate.csv home/rshaon1/Public/MyRealEstate.csv
+  142  cd Lab_P2
+  143  cp -i home/rshaon1/Lab2_P2/RealEstate.csv home/rshaon1/Public/MyRealEstate.csv
+  144  cd Lab2_P2
+  145  ls
+  146  pwd
+  147  cd /home/rshaon1
+  148  cp RealEsate.csv /home/rshaon1/Public/MyRealEstate.csv
+  149  cp RealEstate.csv /home/rshaon1/Public/MyRealEstate.csv
+  150  cp RealEstate.csv /home/rshaon1/Public/myRealEstate.csv
+  151  ls
+  152  cp -i RealEstate.csv Public/myRealEstate.csv
+  153  cp /home/rshaon1/Lab2_P2/RealEstate.csv /home/rshaon1/Public/myRealEstate.csv
+  154  ls
+  155  pwd
+  156  ls
+  157  ls /Public
+  158  ls /home/rshaon1/Public
+  159  ls Public
+  160  cd Public
+  161  mkdir -p Public/{Regular,Submission/{Lab2,Lab3}}
+  162  tree Public
+  163  mv Regular Others
+  164  ls
+  165  mv Regular Others
+  166  mv /Public/Regular Others
+  167  mv /home/rshaon1/Public/Public/Regular /home/rshaon1/Public/Public/Others
+  168  cd Public
+  169  ls
+  170  tree Public
+  171  cp Lab2_P2 Lab2
+  172  cd Public
+  173  cd /home/rshaon1/Public
+  174  ls
+  175  cp /Lab2_P2 /Public/Submission/Lab2
+  176  cp ~/Lab2_P2 ~/Public/Submission/Lab2
+  177  cp -r ~/Lab2_P2 ~Public/Submission/Lab2
+  178  cp -r ~/Lab2_P2 ~/Public/Submission/Lab2
+  179  cp ~/Lab2_P2 ~/Submission/Lab2
+  180  cp -r ~/Lab2_P2 ~/Submission/Lab2
+  181  cp -r /home/rshaon1/Lab2_P2 ~/Public/Submission/Lab2
+  182  cp -r /home/rshaon1/Lab_P2 ~/Submission/Lab2
+  183  cp -r /home/rshaon1/Lab2_P2 ~/Submission/Lab2
+  184  cp -r ~/Lab2_P2 ~/Public/Public/Submission/Lab2
+  185  rm /home/rshaon1/Lab2_P2
+  186  rmdir /home/rshaon1/Lab2_P2
+  187  rm -r /home/rshaon1/Lab2_P2
+  188  ls
+  189  history
+  190  history 50 > /home/rshaon1/Public/Public/Submission/Lab2/Lab2_P2/Lab2_2.txt
+[rshaon1@gsuad.gsu.edu@snowball Lab2_P2]$
