@@ -1,0 +1,16 @@
+  242  mkdir homeworks
+  243  ls
+  244  cd homeworks
+  245  vim homework_instructions.txt
+  246  ls
+  247  cd homework_instructions.txt
+  248  ls -l
+  249  chmod 644 homework_instructions.txt
+  250  ls -l
+  251  /POINTS
+  252  grep POINTS homework_instructions.txt
+  253  grep -i POINTS homework_instructions.txt
+  254  vim homework_instructions.txt
+  255  ls
+  256  history
+[rshaon1@gsuad.gsu.edu@snowball ~]$
