@@ -1,0 +1,1 @@
+ wc < text.txt | awk '{print "Lines: "$1} {print "Words: "$2} {print "Character: "$3}'

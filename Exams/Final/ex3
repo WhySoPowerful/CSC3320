@@ -1,0 +1,206 @@
+a. perror()
+    print a system error message. This function prints the last encountered error during a call to a system or library function.
+    FILE* fp = fopen("file.txt", "r");
+    if (fp == NULL){
+        perror("Error: ")
+        return -1;
+    }
+
+    Output: Error: No such file or directory
+
+b. open()
+    open and possibly create a file.
+    This function opens a file with the given pathname. If the file does not exist, it can be created.
+
+    char buffer[100];
+    int fd = open("file.txt", O_RDONLY);
+    ssize_t nrd;
+    while (nrd = read(fd, buffer, 50)) {
+        //TODO: make something with the data
+    }
+    close(fd);
+
+c. read()
+    read from a file descriptor.
+    Attempts to read up to a given amount of bytes from the file descriptor into a buffer.
+
+    char buffer[100];
+    int fd = open("file.txt", O_RDONLY);
+    ssize_t nrd;
+    while (nrd = read(fd, buffer, 50)) {
+        //TODO: make something with the data
+    }
+    close(fd);
+
+d. write()
+    write to a file descriptor.
+    writes up to a give amount of bytes from the buffer to the file descriptor.
+
+    ssize_t nrd;
+    int fd;
+    int fd1;
+    char buffer[100];
+
+    fd = open(aa[1], O_RDONLY);
+    fd1 = open(aa[2], O_CREAT | O_WRONLY, S_IRUSR | S_IWUSR);
+    while (nrd = read(fd,buffer,50)) {
+        write(fd1,buffer,nrd);
+    }
+
+    close(fd);
+    close(fd1);
+
+e. lseek()
+    reposition read/write file offset.
+    repositions the file offset of the open file descriptoion to the argmuent offset.
+
+    char buffer[100];
+    int fd = open("file.txt", O_RDONLY);
+    ssize_t nrd;
+    lseek(fd, 50, SEEK_CUR);
+    while (nrd = read(fd, buffer, 50)) {
+        //TODO: make something with the data
+    }
+    close(fd);
+
+f. close()
+    close a file descriptor.
+    Closes a file descriptor, sp that it no longer refers to any file and may be reused.
+
+    char buffer[100];
+    int fd = open("file.txt", O_RDONLY);
+    ssize_t nrd;
+    lseek(fd, 50, SEEK_CUR);
+    while (nrd = read(fd, buffer, 50)) {
+        //TODO: make something with the data
+    }
+    close(fd);
+
+g. monitor()
+Utility: monitor [-t delay] [-l count] { fileName }+
+monitor scans all of the specified files every delay seconds and displays information about any of the specified files that were modified since the last scan. If fileName is a directory, all of the files inside that directory are scanned. File modification is indi- cated in one of three ways:
+LABEL
+ADDED
+CHANGED DELETED
+MEANING
+Indicates that the file was created since the last scan. Every file in the file list is given this label during the first scan.
+Indicates that the file was modified since the last scan. Indicates that the file was deleted since the last scan.
+By default, monitor will scan forever, although you can specify the total number of scans by using the -l option. The default delay time is 10 seconds between scans, al- though this may be overridden by using the -t option.
+
+h. chown()
+    change file owner and group.
+    chown changes the user and/or group ownership of each given file.
+
+    chown root /u
+    Change the owner of /u to "root"
+
+i. fchown()
+    Change owner and group of a file.
+    Equivalent to shown except that the file whose owner and group are changed is specified by the file descriptor
+
+
+    #include <sys/types.h>
+    #include <unistd.h>
+    #include <fcntl.h>
+    #include <pwd.h>
+    #include <grp.h>
+
+    struct passwd *pwd;
+    struct group  *grp;
+    int            fildes;
+    ...
+    fildes = open("/home/cnd/mod1", O_RDWR);
+    pwd = getpwnam("jones");
+    grp = getgrnam("cnd");
+    fchown(fildes, pwd->pw_uid, grp->gr_gid);
+
+j. chmod()
+    change file mode bits.
+    chmod changes the file mode bits of each given gile according to mode.
+
+    chmode +x fileinfo.sh
+
+k. fchmod()
+    change mode of a file.
+    Equivalent to chmode except that the file whose permissions are changed is specified by the file descriptor.
+
+    #include <sys/stat.h>
+    #include <fcntl.h>
+
+    mode_t mode;
+    int    fildes;
+    ...
+    fildes = open("/home/cnd/mod1", O_RDWR);
+    fchmod(fildes, S_IRWXU | S_IRWXG | S_IROTH | S_IWOTH);
+
+l. link()
+    creates a new link to an existing file.
+
+    link file1.txt file2.txt
+
+m. unlink()
+    removes a link to an existing file
+
+    unlink file1.txt
+
+n. getpid()
+    Returns the process ID of the calling process.
+
+    int pid = getpid();
+
+o. getppid()
+    Returns the process ID of the parent of the calling process.
+
+    int ppid = getppid();
+
+p. fork()
+    Creates a new process by duplicating the calling process. The new process is referred to as the child process.
+    
+    #include <sys/types.h>
+    #include <sys/wait.h>
+    #include <stdio.h>
+    #include <stdlib.h>
+    #include <unistd.h>
+    #include <string.h>
+
+    int
+    main(int argc, char *argv[])
+    {
+        int pipefd[2];
+        pid_t cpid;
+        char buf;
+
+        if (argc != 2) {
+            fprintf(stderr, "Usage: %s <string>\n", argv[0]);
+            exit(EXIT_FAILURE);
+        }
+
+        if (pipe(pipefd) == -1) {
+            perror("pipe");
+            exit(EXIT_FAILURE);
+        }
+
+        cpid = fork();
+        if (cpid == -1) {
+            perror("fork");
+            exit(EXIT_FAILURE);
+        }
+
+        if (cpid == 0) {    /* Child reads from pipe */
+            close(pipefd[1]);          /* Close unused write end */
+
+            while (read(pipefd[0], &buf, 1) > 0)
+                write(STDOUT_FILENO, &buf, 1);
+
+            write(STDOUT_FILENO, "\n", 1);
+            close(pipefd[0]);
+            _exit(EXIT_SUCCESS);
+
+        } else {            /* Parent writes argv[1] to pipe */
+            close(pipefd[0]);          /* Close unused read end */
+            write(pipefd[1], argv[1], strlen(argv[1]));
+            close(pipefd[1]);          /* Reader will see EOF */
+            wait(NULL);                /* Wait for child */
+            exit(EXIT_SUCCESS);
+        }
+    }
